@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" >
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+
+</head>
+
+
+<body id="top">
+
+    
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+
+    <!-- page wrap
+    ================================================== -->
+    <div id="page" class="s-pagewrap">
+
+
+        <!-- # site header 
+        ================================================== -->
+        <header class="s-header">
+            <div class="row s-header__inner">
+
+                <div class="s-header__block">
+                    <div class="s-header__logo">
+                        <a class="logo" href="index.html">
+                            <img src="images/icons8-home30.svg" alt="Homepage">
+                        </a>
+                    </div>
+
+                    <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+                </div> <!-- end s-header__block -->
+
+                <nav class="s-header__nav">    
+                    <ul class="s-header__menu-links">
+                        <li class="current"><a class="smoothscroll" href="#intro">Intro</a></li>
+                        <li><a class="smoothscroll" href="#about">About</a></li>
+                        <li><a class="smoothscroll" href="#works">Works</a></li>
+                        <li><a class="smoothscroll" href="#footer">Contact</a></li>
+                    </ul> <!-- s-header__menu-links -->    
+                </nav> <!-- end s-header__nav -->
+
+            </div> <!-- end s-header__inner -->
+        </header> <!-- end s-header -->
+
+
+        <!-- # intro
+        ================================================== -->
+        <section id="intro" class="s-intro target-section">
+
+            <div class="row s-intro__content width-sixteen-col">
+                <div class="column lg-12 s-intro__content-inner grid-block grid-16">
+                    
+                    <div class="s-intro__content-text">
+
+                        <div class="s-intro__content-pretitle text-pretitle">Hello</div>
+                        <h1 class="s-intro__content-title">
+                        I'm Subash Konar <br>
+                        a Data Engineer <br>
+                        based in India.
+                        </h1>                            
+
+                        <div class="s-intro__content-btns">
+                            <a class="smoothscroll btn" href="#about">More About Me</a>
+                            <a class="smoothscroll btn btn--stroke" href="#footer">Get In Touch</a>
+                        </div> <!-- s-intro__content-btns -->   
+
+                    </div> <!-- s-intro__content-text -->                     
+                    
+                </div> <!-- s-intro__content-inner -->  
+            </div> <!-- s-intro__content -->
+
+            <ul class="s-intro__social social-list">
+                <li>
+                    <a href="https://www.linkedin.com/in/subashkonar/"target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.5 19h-3v-10h3v10zm-1.5-11.49c-1.04 0-1.88-.85-1.88-1.89 0-1.04.84-1.88 1.88-1.88 1.04 0 1.89.85 1.89 1.88 0 1.04-.85 1.89-1.89 1.89zm13 11.49h-3v-5.6c0-1.34-.54-2.24-1.77-2.24-1.33 0-1.9 1.02-1.9 2.24v5.6h-3v-10h3v1.42c.75-1.29 2.16-1.72 3.12-1.72 2.27 0 4.55 1.52 4.55 4.89v5.41z"/>
+                        </svg>
+                        <span class="u-screen-reader-text">LinkedIn</span>
+                    </a>
+                    
+                </li>
+                <li>
+                        <a href="https://github.com/subashkonar13" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577v-2.23c-3.338.724-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.757-1.333-1.757-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.606-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.469-2.382 1.236-3.221-.123-.303-.535-1.521.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 013.003-.404c1.018.005 2.041.138 3.003.404 2.291-1.553 3.297-1.23 3.297-1.23.654 1.655.242 2.873.118 3.176.77.839 1.234 1.911 1.234 3.221 0 4.61-2.807 5.625-5.478 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.217.694.824.576 4.765-1.587 8.199-6.084 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                            <span class="u-screen-reader-text">GitHub</span>
+                        </a>
+                    
+                </li>
+                <li>
+                    <a href="https://stackoverflow.com/users/5381657/subash" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                            <path d="M17.817 21.207H4.749V15.85H3.033v7.354h16.576v-7.354h-1.792v5.357zM7.403 15.562l.35-1.763 8.62 1.703-.348 1.763-8.622-1.703zm1.33-4.106l.698-1.605 8.038 3.498-.7 1.605-8.036-3.498zm2.107-4.08l1.085-1.326 6.478 5.294-1.084 1.326-6.479-5.294zm4.465-6.28l5.294 6.478-1.326 1.085-5.294-6.479 1.326-1.084zM6.28 18.947h8.955v-1.799H6.28v1.799z"/>
+                        </svg>
+                        <span class="u-screen-reader-text">Stack Overflow</span>
+                    </a>
+                    
+                </li>
+                <li>
+                    <a href="https://topmate.io/subash_konar" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill:rgba(0, 0, 0, 1);transform:;-ms-filter:">
+                            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"/>
+                            <path d="M10 7h4v2h-4zm-1 4h6v2h-6zm-1 4h8v2H8z"/>
+                        </svg>
+                        <span class="u-screen-reader-text">Topmate</span>
+                    </a>
+                    
+                </li>
+            </ul> <!-- end s-intro__social -->
+
+            <div class="s-intro__content-media">                               
+                <img src="images/intro-bg.jpeg" srcset="images/intro-bg.jpg 1x, images/intro-bg.jpg 2x" alt="">
+            </div> <!-- s-intro__content-media -->                
+
+            <div class="s-intro__btn-download">
+                <a class="btn btn--stroke" href="resume/Subash_Resume.pdf" target="_blank" rel="noopener noreferrer">Get My CV</a>
+            </div> <!-- end s-intro__btn-download -->
+            
+            
+            <div class="s-intro__scroll-down">
+                <a href="#about" class="smoothscroll">
+                    <div class="scroll-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path></svg>
+                    </div>
+                    <span class="scroll-text u-screen-reader-text">Scroll Down</span>
+                </a>
+            </div> <!-- s-intro__scroll-down -->
+
+        </section> <!-- end s-intro -->
+
+
+        <!-- # about
+================================================== -->
+<section id="about" class="s-about target-section">
+
+    <div class="row s-about__content">
+        <div class="column xl-12">    
+            
+            <div class="section-header" data-num="01">
+                <h2 class="text-display-title">About Me.</h2>
+            </div> <!-- end section-header -->
+
+            <p class="attention-getter">
+            With over 11 years of hands-on experience in Data Engineering, I am passionate about transforming complex data into meaningful insights that drive impactful business decisions. My journey in this field has been marked by building scalable, high-performance data pipelines, architecting data solutions that stand the test of scale, and ensuring data quality and governance across diverse platforms.
+            </p>
+
+            <p class="attention-getter">
+            As a seasoned Data Engineer, I have had the privilege of working with cutting-edge technologies across cloud ecosystems, real-time processing frameworks, and advanced ETL tools. As this quote says, "Without data, you’re just another person with an opinion" — W. Edwards Deming. My work is dedicated to making data accessible, insightful, and actionable.
+            </p>
+
+            <p class="attention-getter">
+            Throughout my career, I’ve led projects in areas such as big data, cloud migrations, data lakehouse architectures, and automated data quality checks. My core strengths include designing sustainable data infrastructures, implementing robust CI/CD practices, and delivering insights that align data strategy with organizational goals.
+            </p>
+
+            <p class="attention-getter">
+            When I'm not optimizing pipelines or tuning databases, I enjoy mentoring aspiring data engineers, collaborating with cross-functional teams, and staying on top of industry trends to bring the latest innovations to my work.
+            </p>
+
+            <p class="attention-getter">
+            Let's connect if you’re passionate about leveraging data to drive results! 🚀
+            </p>
+
+            <div class="grid-list-items s-about__blocks">
+
+                <div class="grid-list-items__item s-about__block">
+                    <h4 class="s-about__block-title">Experience</h4>
+                    <ul class="s-about__list">
+                        <li>
+                            Advisor360
+                            <span>Lead Data Engineer</span>
+                        </li>
+                        <li>
+                            Microsoft
+                            <span>Senior Data Engineer</span>
+                        </li>
+                        <li>
+                            Woolworths
+                            <span>DWH Designer</span>
+                        </li>
+                        <li>
+                            TCS
+                            <span>Hadoop Developer</span>
+                        </li>
+                    </ul>
+                </div> <!--end s-about__block -->
+
+                <div class="grid-list-items__item s-about__block">
+                    <h4 class="s-about__block-title">Awards</h4>
+
+                    <ul class="s-about__list">
+                        <li>
+                            <a href="https://www.linkedin.com/posts/subashkonar_i-am-truly-humbled-and-grateful-to-receive-activity-7143508801592123392-n5QS?utm_source=share&utm_medium=member_desktop">
+                                Mountain Mover-Microsoft
+                                <span>Award — 2024</span>
+                            </a>                                        
+                        </li>
+                        <li>
+                            <a href="#0">
+                                Star of the Month - Microsoft
+                                <span>Award — 2023</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#0">
+                                Star of the Month - Microsoft
+                                <span>Award — 2021</span>
+                            </a>
+                        </li><li>
+                            <a href="#0">
+                                Quarterly Award - TCS
+                                <span>Award — 2019</span>
+                            </a>                                        
+                        </li>
+                    </ul>
+                </div> <!--end s-about__block -->
+                
+                <div class="grid-list-items__item s-about__block">
+                    <h4 class="s-about__block-title">Skills</h4>
+
+                    <ul class="s-about__list">
+                        <li>
+                            Data Engineering : Streaming | Batch
+                        </li>
+                        <li>
+                            Data Analysis
+                        </li>
+                        <li>
+                            Data Governance
+                        </li>
+                        <li>
+                            Data Quality
+                        </li>
+                        <li>
+                            Data Modelling
+                        </li>
+                        <li>
+                            Team Management
+                        </li>
+                    </ul>
+                </div> <!--end s-about__block -->
+
+            </div> <!-- grid-list-items -->
+
+        </div> <!--end column -->
+    </div> <!--end s-about__content -->
+    
+</section> <!-- end s-about -->
+
+<!-- # works
+================================================== -->
+<section id="works" class="s-about target-section">
+
+    <div class="row s-about__content">
+        <div class="column xl-12">    
+            
+            <div class="section-header" data-num="02">
+                <h2 class="text-display-title">GitHub Stats</h2>
+            </div> <!-- end section-header -->
+
+            <p class="attention-getter">
+                Check out my GitHub profile for my latest projects and contributions!
+            </p>
+
+            <a href="https://github.com/subashkonar13" target="_blank" rel="noopener noreferrer">
+                <img src="https://github-readme-stats.vercel.app/api?username=subashkonar13&show_icons=true&theme=default" alt="GitHub Stats">
+            </a>
+
+        </div> <!--end column -->
+    </div> <!--end s-works__content -->
+    
+</section> <!-- end s-works -->
+
+ 
+        <!-- # footer 
+        ================================================== -->
+        <footer id="footer" class="s-footer target-section">
+
+            <div class="row">
+                <div class="column lg-12">
+                    <div class="section-header light-on-dark" data-num="03">
+                        <h2 class="text-display-title">Get In Touch.</h2>
+                    </div> <!-- end section-header -->
+                </div>
+            </div>
+
+            <div class="row s-footer__content">
+
+                <div class="column xl-6 md-12 s-footer__block s-footer__about">                    
+                    <p class="attention-getter">
+                  
+                    </p>               
+                </div> <!-- end section-footer__about -->
+
+                <div class="column xl-6 md-12 s-footer__block s-footer__site-links">
+                    <div class="row">
+                        <div class="column xl-4 lg-5 md-6 tab-12">
+                            <h5>Follow Me</h5>
+                            <ul class="link-list">
+                                <li><a href="https://www.linkedin.com/in/subashkonar/">Linkedin</a></li>
+                                <li><a href="https://www.instagram.com/real_subash/profilecard/?igsh=MXh5eXczOHFjZjI0YQ==">Instagram</a></li>
+                            </ul>
+                        </div>
+                        <div class="column xl-6 md-6 tab-12">
+                            <h5>Reach out!</h5>
+                            <ul class="link-list">
+                                <li><a href="mailto:#0">subashkonar13@outlook.com</a></li>
+                                <li><a href="https://topmate.io/subash_konar">Topmate</a></li>
+                            </ul> 
+                        </div>
+                    </div>                    
+                </div> <!-- end section-footer__site-links -->
+
+            </div> <!-- end section-footer__content -->
+
+
+            <div class="row s-footer__buttons">
+               
+                <div class="column xl-6 tab-12">
+                    <a href="mailto:#0" class="btn btn--primary btn--large u-fullwidth">Message Me</a>
+                </div>
+          
+                <div class="column xl-6 tab-12">                    
+                    <a class="btn btn--stroke" href="resume/Subash_Resume.pdf" target="_blank" rel="noopener noreferrer">Get My CV</a>
+                </div>
+            
+            </div> <!-- end section-footer__buttons -->              
+            
+            
+
+                <div class="column xl-6 lg-12">
+                    <p class="ss-copyright">
+                        <span>© Copyright Subash 2024</span> 
+                    </p>
+                </div>
+
+            </div> <!-- end section-footer__bottom -->          
+
+            
+        </footer> <!-- end s-footer -->
+
+    </div> <!-- end page-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
