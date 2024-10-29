@@ -55,7 +55,23 @@
                 <div class="s-header__block">
                     <div class="s-header__logo">
                         <a class="logo" href="index.html">
-                            <img src="images/icons8-home30.svg" alt="Homepage">
+                          <!--img src="images/icons8-home30.svg" alt="Homepage"-->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30" class="home-icon" aria-label="Homepage">
+                                <style>
+                                    .home-icon {
+                                        fill: #fcfafa; /* Default color */
+                                        cursor: pointer;
+                                        transition: fill 0.3s ease;
+                                    }
+                                    .home-icon:hover {
+                                        fill: #3498db; /* Hover color */
+                                    }
+                                    .home-icon:active {
+                                        fill: #2c3e50; /* Active (clicked) color */
+                                    }
+                                </style>
+                                <path d="M12 2.9L3 10.1V20c0 .6.4 1 1 1h6v-7h4v7h6c.6 0 1-.4 1-1V10.1L12 2.9zM12 1l10 9h-3v10c0 1.1-.9 2-2 2h-6c-1.1 0-2-.9-2-2v-6H5v6c0 1.1-.9 2-2 2H0v-10H0L12 1z"/>
+                            </svg>
                         </a>
                     </div>
 
