@@ -26,6 +26,7 @@
         const headerSubtitle = document.getElementById('blogSubtitle');
         const headerBadges = document.getElementById('blogBadges');
         const topicLinks = document.querySelectorAll('.topic-link');
+        const blogContents = document.querySelectorAll('.blog-content');
 
         if (!(headerTitle && headerSubtitle && headerBadges)) return;
 
@@ -53,6 +54,21 @@
             }, 300);
         }
 
+        function updateContent(topicId) {
+            blogContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            const selectedContent = document.getElementById(`${topicId}-content`);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+                // Reinitialize AOS for new content
+                AOS.refresh();
+                // Scroll to top of content
+                selectedContent.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
         function updateActiveCard(clickedLink) {
             topicLinks.forEach(link => {
                 link.querySelector('.topic-card').classList.remove('active');
@@ -74,8 +90,9 @@
         topicLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const topicId = link.dataset.topic;
+                const topicId = link.getAttribute('href').replace('#', '');
                 updateHeader(topicId);
+                updateContent(topicId);
                 updateActiveCard(link);
             });
         });
