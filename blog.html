@@ -252,6 +252,18 @@
             margin: 0 0.2rem;
             transition: all 0.3s ease;
         }
+
+        .blog-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .blog-content[style*="display: none"] {
+            opacity: 0;
+        }
+
+        .blog-content {
+            opacity: 1;
+        }
     </style>
     <!-- Add Mermaid.js -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -326,9 +338,9 @@
     </section>
 
     <!-- Article Content -->
-    <main class="container" id="pdf-extractor">
-        <article>
-            <!-- Introduction Section -->
+    <main class="container">
+        <!-- PDF Extractor Article -->
+        <article id="pdf-extractor-content" class="blog-content active">
             <section class="article-section" data-aos="fade-up">
                 <h2>Introduction</h2>
                 <p>The PDF Table Extractor is a sophisticated Python application that leverages Azure Document Intelligence (formerly Form Recognizer) to automatically extract and process tabular data from PDF files. This tool streamlines the often complex process of table extraction, making it accessible through a user-friendly Streamlit interface.</p>
@@ -424,6 +436,53 @@ docker run -p 8501:8501 pdf-extractor</code></pre>
                             <i class="fab fa-github me-2"></i>View on GitHub
                         </a>
                     </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- ML Pipeline Article -->
+        <article id="coming-soon-1-content" class="blog-content" style="display: none;">
+            <section class="article-section" data-aos="fade-up">
+                <h2>Introduction to ML Pipelines</h2>
+                <p>Building robust and scalable machine learning pipelines is crucial for implementing ML solutions in production environments. This article explores how to create end-to-end ML pipelines using Azure ML services.</p>
+                
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">ML Pipeline Architecture</h3>
+                    <div class="architecture-step text-center">Data Ingestion</div>
+                    <div class="architecture-step text-center">Data Preprocessing</div>
+                    <div class="architecture-step text-center">Model Training</div>
+                    <div class="architecture-step text-center">Model Evaluation</div>
+                    <div class="architecture-step text-center">Model Deployment</div>
+                </div>
+            </section>
+
+            <section class="article-section" data-aos="fade-up">
+                <h2>Coming Soon!</h2>
+                <div class="alert alert-info">
+                    <p>This article is currently under development. Check back soon for the complete guide on building ML pipelines with Azure ML!</p>
+                </div>
+            </section>
+        </article>
+
+        <!-- Cloud Architecture Article -->
+        <article id="coming-soon-2-content" class="blog-content" style="display: none;">
+            <section class="article-section" data-aos="fade-up">
+                <h2>Cloud Architecture Patterns</h2>
+                <p>Designing scalable cloud solutions requires understanding of various architectural patterns and best practices. This article will dive deep into cloud architecture patterns using Azure services.</p>
+                
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">Cloud Architecture Overview</h3>
+                    <div class="architecture-step text-center">Infrastructure as Code</div>
+                    <div class="architecture-step text-center">Microservices Architecture</div>
+                    <div class="architecture-step text-center">Event-Driven Design</div>
+                    <div class="architecture-step text-center">Serverless Computing</div>
+                </div>
+            </section>
+
+            <section class="article-section" data-aos="fade-up">
+                <h2>Coming Soon!</h2>
+                <div class="alert alert-info">
+                    <p>This comprehensive guide to cloud architecture patterns is currently being prepared. Stay tuned!</p>
                 </div>
             </section>
         </article>
