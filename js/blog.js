@@ -8,7 +8,7 @@
             'pdf-extractor': {
                 title: 'Building a PDF Table Extractor',
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
-                badges: ['Python', 'Azure','Docker']
+                badges: ['Python', 'Azure']
             },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
@@ -29,6 +29,40 @@
         const blogContents = document.querySelectorAll('.blog-content');
 
         if (!(headerTitle && headerSubtitle && headerBadges)) return;
+
+        // Add back button
+        const backButton = document.createElement('button');
+        backButton.className = 'back-button btn btn-outline-primary position-fixed';
+        backButton.style.cssText = 'top: 20px; left: 20px; z-index: 1000;';
+        backButton.innerHTML = '<i class="fas fa-arrow-left me-2"></i>Back';
+        backButton.addEventListener('click', () => {
+            window.history.back();
+        });
+        document.body.appendChild(backButton);
+
+        // Add copy functionality to code blocks
+        function initializeCopyButtons() {
+            const codeBlocks = document.querySelectorAll('.card-body code');
+            codeBlocks.forEach(codeBlock => {
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-btn btn btn-sm btn-outline-secondary position-absolute';
+                copyButton.style.cssText = 'top: 5px; right: 5px;';
+                copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                copyButton.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(codeBlock.textContent);
+                        copyButton.innerHTML = 'Copied!';
+                        setTimeout(() => {
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                    }
+                });
+                codeBlock.parentElement.style.position = 'relative';
+                codeBlock.parentElement.appendChild(copyButton);
+            });
+        }
 
         function updateHeader(topicId) {
             const topic = BlogTopics[topicId];
@@ -64,6 +98,8 @@
                 selectedContent.style.display = 'block';
                 // Reinitialize AOS for new content
                 AOS.refresh();
+                // Reinitialize copy buttons for new content
+                initializeCopyButtons();
                 // Scroll to top of content
                 selectedContent.scrollIntoView({ behavior: 'smooth' });
             }
@@ -112,6 +148,8 @@
                     updateActiveCard(link);
                 }
             }
+            // Initialize copy buttons on page load
+            initializeCopyButtons();
         });
     };
 
