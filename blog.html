@@ -374,10 +374,43 @@
                 <h2>Implementation</h2>
                 <h3>Setup Steps</h3>
                 <ol class="step-list">
-                    <li>Clone the repository</li>
-                    <li>Install dependencies</li>
+                    <li>
+                        Clone the repository
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#cloneDetails" aria-expanded="false" aria-controls="cloneDetails">
+                            Show Details
+                        </button>
+                        <div class="collapse mt-2" id="cloneDetails">
+                            <div class="card card-body">
+                                <code>git clone https://github.com/subashkonar13/pdf-table-reader.git</code>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        Install dependencies
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#dependencyDetails" aria-expanded="false" aria-controls="dependencyDetails">
+                            Show Command
+                        </button>
+                        <div class="collapse mt-2" id="dependencyDetails">
+                            <div class="card card-body">
+                                <code>pip install -r requirements.txt</code>
+                            </div>
+                        </div>
+                    </li>
                     <li>Configure Azure credentials</li>
                 </ol>
+            </section>
+
+            <!-- For More Info Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>For More Information</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <p>For detailed documentation, source code, and contribution guidelines, visit the project repository:</p>
+                        <a href="https://github.com/subashkonar13/pdf-table-reader" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
+                    </div>
+                </div>
             </section>
         </article>
 
