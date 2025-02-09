@@ -36,6 +36,13 @@
             color: white;
             padding: 100px 0;
             margin-bottom: 50px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .blog-title,
+        .blog-header .lead,
+        #blogBadges {
+            transition: opacity 0.3s ease-in-out;
         }
 
         .blog-title {
@@ -189,12 +196,15 @@
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
             height: 100%;
         }
 
-        .topic-card:hover {
+        .topic-card.active {
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-color: #1e3c72;
         }
 
         .topic-link {
@@ -237,6 +247,11 @@
         .architecture-step:last-child::after {
             display: none;
         }
+
+        .badge {
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
     </style>
     <!-- Add Mermaid.js -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -255,8 +270,12 @@
     <!-- Header -->
     <header class="blog-header text-center" data-aos="fade-down">
         <div class="container">
-            <h1 class="blog-title">Building a PDF Table Extractor</h1>
-            <p class="lead">Using Azure Document Intelligence for Automated Table Extraction</p>
+            <h1 class="blog-title" id="blogTitle">Building a PDF Table Extractor</h1>
+            <p class="lead" id="blogSubtitle">Using Azure Document Intelligence for Automated Table Extraction</p>
+            <div id="blogBadges" class="mt-3">
+                <span class="badge bg-primary">Python</span>
+                <span class="badge bg-secondary">Azure</span>
+            </div>
         </div>
     </header>
 
@@ -456,5 +475,6 @@ docker run -p 8501:8501 pdf-extractor</code></pre>
             });
         });
     </script>
+    <script src="js/blog.js"></script>
 </body>
 </html>
