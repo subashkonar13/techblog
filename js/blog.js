@@ -8,7 +8,7 @@
             'pdf-extractor': {
                 title: 'Building a PDF Table Extractor',
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
-                badges: ['Python', 'Azure']
+                badges: ['Python', 'Azure','Docker']
             },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
@@ -91,10 +91,27 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const topicId = link.getAttribute('href').replace('#', '');
+                
+                // Update URL with the section hash without page reload
+                window.history.pushState({}, '', `${window.location.pathname}#${topicId}`);
+                
                 updateHeader(topicId);
                 updateContent(topicId);
                 updateActiveCard(link);
             });
+        });
+
+        // Handle direct navigation to sections via URL hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && BlogTopics[hash]) {
+                updateHeader(hash);
+                updateContent(hash);
+                const link = document.querySelector(`a[href="#${hash}"]`);
+                if (link) {
+                    updateActiveCard(link);
+                }
+            }
         });
     };
 
