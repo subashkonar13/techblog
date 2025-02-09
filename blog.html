@@ -164,7 +164,26 @@
             left: 0;
             top: 0;
         }
+
+        /* Add styles for mermaid diagrams */
+        .mermaid {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        /* Ensure the diagram is responsive */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
+    <!-- Add Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 </head>
 <body>
     <!-- Preloader -->
@@ -212,6 +231,19 @@
             <!-- Implementation Section -->
             <section class="article-section" data-aos="fade-up">
                 <h2>Implementation</h2>
+                
+                <h3>Execution Flow</h3>
+                <div class="code-block">
+                    <div class="mermaid">
+                        sequenceDiagram
+                            User->>Streamlit UI: Upload PDF
+                            User->>Streamlit UI: Configure Schema Settings
+                            Streamlit UI->>PDFProcessor: Process PDF
+                            PDFProcessor->>Azure AI: Send PDF
+                            Azure AI->>PDFProcessor: Return Tables
+                    </div>
+                </div>
+
                 <h3>Setup Process</h3>
                 <div class="code-block">
                     <pre><code>pip install -r requirements.txt</code></pre>
