@@ -3,245 +3,29 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Technical blog about PDF Table Extraction using Azure">
     <title>Building a PDF Table Extractor - Subash Konar</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Preload critical assets -->
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+
+    <!-- Stylesheets -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <style>
-        /* Preloader */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
+    <link href="css/styles.css" rel="stylesheet">
+    
+    <!-- Defer non-critical CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
 
-        .preloader.fade-out {
-            opacity: 0;
-        }
-
-        /* Header Styles */
-        .blog-header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 100px 0;
-            margin-bottom: 50px;
-        }
-
-        .blog-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* Blog Card Styles */
-        .blog-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .blog-card-image {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .blog-meta {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .read-more-btn {
-            background: #1e3c72;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .read-more-btn:hover {
-            background: #2a5298;
-            color: white;
-        }
-
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-            background: #1e3c72;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            z-index: 1000;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .back-to-top:hover {
-            background: #2a5298;
-        }
-
-        /* Additional styles for article content */
-        .article-section {
-            margin-bottom: 4rem;
-        }
-
-        .article-section h2 {
-            color: #1e3c72;
-            margin-bottom: 1.5rem;
-        }
-
-        .code-block {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        .architecture-diagram {
-            max-width: 100%;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .prerequisite-list {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .step-list {
-            counter-reset: step-counter;
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .step-list li {
-            counter-increment: step-counter;
-            margin-bottom: 1rem;
-            padding-left: 3rem;
-            position: relative;
-        }
-
-        .step-list li::before {
-            content: counter(step-counter);
-            background: #1e3c72;
-            color: white;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        /* Add styles for mermaid diagrams */
-        .mermaid {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-        
-        /* Ensure the diagram is responsive */
-        .mermaid svg {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Add new styles for topics section */
-        .topics-section {
-            padding: 4rem 0;
-            background: #f8f9fa;
-        }
-
-        .topic-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            height: 100%;
-        }
-
-        .topic-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .topic-link {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .topic-link:hover {
-            color: inherit;
-        }
-
-        /* Architecture diagram styles */
-        .architecture-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin: 2rem 0;
-        }
-
-        .architecture-step {
-            background: #1e3c72;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            position: relative;
-        }
-
-        .architecture-step::after {
-            content: "↓";
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #1e3c72;
-            font-size: 1.5rem;
-        }
-
-        .architecture-step:last-child::after {
-            display: none;
-        }
-    </style>
-    <!-- Add Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <!-- Mermaid initialization -->
     <script>
-        mermaid.initialize({ startOnLoad: true });
+        window.mermaidConfig = {
+            startOnLoad: true,
+            theme: 'default',
+            loadedCallback: function() {
+                console.log('Mermaid loaded successfully');
+            }
+        };
     </script>
 </head>
 <body>
@@ -252,209 +36,49 @@
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="blog-header text-center" data-aos="fade-down">
-        <div class="container">
-            <h1 class="blog-title">Building a PDF Table Extractor</h1>
-            <p class="lead">Using Azure Document Intelligence for Automated Table Extraction</p>
-        </div>
-    </header>
-
-    <!-- Topics Navigation Section -->
+    <!-- Topics Navigation -->
     <section class="topics-section" data-aos="fade-up">
         <div class="container">
             <h2 class="text-center mb-5">Technical Blog Topics</h2>
-            <div class="row g-4">
-                <!-- Current Blog -->
-                <div class="col-md-4">
-                    <a href="#pdf-extractor" class="topic-link">
-                        <div class="card topic-card">
-                            <div class="card-body">
-                                <h5 class="card-title">PDF Table Extractor</h5>
-                                <p class="card-text">Azure Document Intelligence for Table Extraction</p>
-                                <span class="badge bg-primary">Python</span>
-                                <span class="badge bg-secondary">Azure</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!-- Future Blog Placeholder 1 -->
-                <div class="col-md-4">
-                    <a href="#coming-soon" class="topic-link">
-                        <div class="card topic-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Coming Soon</h5>
-                                <p class="card-text">Stay tuned for more technical content</p>
-                                <span class="badge bg-secondary">Future</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!-- Future Blog Placeholder 2 -->
-                <div class="col-md-4">
-                    <a href="#coming-soon" class="topic-link">
-                        <div class="card topic-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Coming Soon</h5>
-                                <p class="card-text">More exciting technical content ahead</p>
-                                <span class="badge bg-secondary">Future</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            <div class="row g-4" id="topicsContainer">
+                <!-- Topics will be loaded dynamically -->
             </div>
         </div>
     </section>
 
-    <!-- Article Content -->
-    <main class="container" id="pdf-extractor">
-        <article>
-            <!-- Introduction Section -->
-            <section class="article-section" data-aos="fade-up">
-                <h2>Introduction</h2>
-                <p>The PDF Table Extractor is a sophisticated Python application that leverages Azure Document Intelligence (formerly Form Recognizer) to automatically extract and process tabular data from PDF files. This tool streamlines the often complex process of table extraction, making it accessible through a user-friendly Streamlit interface.</p>
-                
-                <div class="architecture-container">
-                    <h3 class="text-center mb-4">Architecture Overview</h3>
-                    <div class="architecture-step text-center">PDF Upload</div>
-                    <div class="architecture-step text-center">Streamlit UI Processing</div>
-                    <div class="architecture-step text-center">Azure Document Intelligence Analysis</div>
-                    <div class="architecture-step text-center">Table Extraction & Processing</div>
-                    <div class="architecture-step text-center">Excel Generation & Download</div>
-                </div>
-            </section>
-
-            <!-- Prerequisites Section -->
-            <section class="article-section" data-aos="fade-up">
-                <h2>Prerequisites</h2>
-                <div class="prerequisite-list">
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Python >= 3.10</li>
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Docker Desktop (optional)</li>
-                        <li><i class="fas fa-check-circle text-success me-2"></i>Azure Document Intelligence service</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Implementation Section -->
-            <section class="article-section" data-aos="fade-up">
-                <h2>Implementation</h2>
-                
-                <h3>Setup Steps</h3>
-                <ol class="step-list">
-                    <li>Clone the repository:<br>
-                        <code>git clone https://github.com/subashkonar13/PDFTableReader.git</code></li>
-                    <li>Install dependencies:<br>
-                        <code>pip install -r requirements.txt</code></li>
-                    <li>Configure Azure credentials in environment variables</li>
-                </ol>
-
-                <h3>Docker Setup (Optional)</h3>
-                <div class="code-block">
-                    <pre><code>docker build -t pdf-extractor .
-docker run -p 8501:8501 pdf-extractor</code></pre>
-                </div>
-
-                <h3>Execution Flow</h3>
-                <div class="code-block">
-                    <div class="mermaid">
-                        sequenceDiagram
-                            User->>Streamlit UI: Upload PDF
-                            User->>Streamlit UI: Configure Schema Settings
-                            Streamlit UI->>PDFProcessor: Process PDF
-                            PDFProcessor->>Azure AI: Send PDF
-                            Azure AI->>PDFProcessor: Return Tables
-                    </div>
-                </div>
-
-                <h3>Running the Application</h3>
-                <ol class="step-list">
-                    <li>Start the application:<br>
-                        <code>python -m streamlit run src/pdfreader.py</code></li>
-                    <li>Upload your PDF file through the interface</li>
-                    <li>Configure schema settings as needed</li>
-                    <li>Click "Process PDF" to start extraction</li>
-                    <li>Download the generated Excel file</li>
-                </ol>
-            </section>
-
-            <!-- Error Handling Section -->
-            <section class="article-section" data-aos="fade-up">
-                <h2>Error Handling</h2>
-                <div class="alert alert-info">
-                    <h4>The application includes comprehensive error handling for:</h4>
-                    <ul>
-                        <li>PDF processing errors</li>
-                        <li>File handling problems</li>
-                        <li>Azure API communication errors</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- For More Information Section -->
-            <section class="article-section" data-aos="fade-up">
-                <h2>For More Information</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Project Repository</h5>
-                        <p class="card-text">For detailed documentation, source code, and implementation details, visit:</p>
-                        <a href="https://github.com/subashkonar13/PDFTableReader/blob/main/README.md" 
-                           class="btn read-more-btn" 
-                           target="_blank" 
-                           rel="noopener noreferrer">
-                            <i class="fab fa-github me-2"></i>View on GitHub
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </article>
+    <!-- Content Container -->
+    <main class="container" id="blogContent">
+        <!-- Blog content will be loaded dynamically -->
     </main>
 
-    <!-- Back to Top Button -->
-    <div class="back-to-top">
+    <!-- Back to Top -->
+    <div class="back-to-top" role="button" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- Templates -->
+    <template id="topicCardTemplate">
+        <div class="col-md-4">
+            <a href="#" class="topic-link">
+                <div class="card topic-card">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text"></p>
+                        <div class="badges"></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
+
     <!-- Scripts -->
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
-    <!-- AOS Animation Library -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Custom JavaScript -->
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-
-        // Preloader
-        window.addEventListener('load', function() {
-            const preloader = document.querySelector('.preloader');
-            preloader.classList.add('fade-out');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
-        });
-
-        // Back to Top Button
-        window.onscroll = function() {
-            const backToTop = document.querySelector('.back-to-top');
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                backToTop.style.display = 'block';
-            } else {
-                backToTop.style.display = 'none';
-            }
-        };
-
-        document.querySelector('.back-to-top').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
+    <!-- Load critical scripts -->
+    <script src="js/main.js" defer></script>
+    
+    <!-- Load non-critical scripts async -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js" async></script>
+    <script src="https://kit.fontawesome.com/your-kit-code.js" async></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" async></script>
 </body>
 </html>
