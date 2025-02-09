@@ -178,6 +178,65 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* Add new styles for topics section */
+        .topics-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+
+        .topic-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .topic-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .topic-link:hover {
+            color: inherit;
+        }
+
+        /* Architecture diagram styles */
+        .architecture-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+        }
+
+        .architecture-step {
+            background: #1e3c72;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .architecture-step::after {
+            content: "↓";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #1e3c72;
+            font-size: 1.5rem;
+        }
+
+        .architecture-step:last-child::after {
+            display: none;
+        }
     </style>
     <!-- Add Mermaid.js -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -201,18 +260,67 @@
         </div>
     </header>
 
+    <!-- Topics Navigation Section -->
+    <section class="topics-section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-5">Technical Blog Topics</h2>
+            <div class="row g-4">
+                <!-- Current Blog -->
+                <div class="col-md-4">
+                    <a href="#pdf-extractor" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">PDF Table Extractor</h5>
+                                <p class="card-text">Azure Document Intelligence for Table Extraction</p>
+                                <span class="badge bg-primary">Python</span>
+                                <span class="badge bg-secondary">Azure</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Future Blog Placeholder 1 -->
+                <div class="col-md-4">
+                    <a href="#coming-soon" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Coming Soon</h5>
+                                <p class="card-text">Stay tuned for more technical content</p>
+                                <span class="badge bg-secondary">Future</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Future Blog Placeholder 2 -->
+                <div class="col-md-4">
+                    <a href="#coming-soon" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Coming Soon</h5>
+                                <p class="card-text">More exciting technical content ahead</p>
+                                <span class="badge bg-secondary">Future</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Article Content -->
-    <main class="container">
+    <main class="container" id="pdf-extractor">
         <article>
             <!-- Introduction Section -->
             <section class="article-section" data-aos="fade-up">
                 <h2>Introduction</h2>
                 <p>The PDF Table Extractor is a sophisticated Python application that leverages Azure Document Intelligence (formerly Form Recognizer) to automatically extract and process tabular data from PDF files. This tool streamlines the often complex process of table extraction, making it accessible through a user-friendly Streamlit interface.</p>
                 
-                <div class="architecture-diagram" data-aos="fade-up">
-                    <h3>Architecture Overview</h3>
-                    <img src="images/pdf-architecture.png" alt="Architecture Diagram" class="img-fluid">
-                    <small class="text-muted">Flow: PDF Upload → Streamlit UI → Azure Document Intelligence → Table Extraction → Excel Generation</small>
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">Architecture Overview</h3>
+                    <div class="architecture-step text-center">PDF Upload</div>
+                    <div class="architecture-step text-center">Streamlit UI Processing</div>
+                    <div class="architecture-step text-center">Azure Document Intelligence Analysis</div>
+                    <div class="architecture-step text-center">Table Extraction & Processing</div>
+                    <div class="architecture-step text-center">Excel Generation & Download</div>
                 </div>
             </section>
 
@@ -232,6 +340,21 @@
             <section class="article-section" data-aos="fade-up">
                 <h2>Implementation</h2>
                 
+                <h3>Setup Steps</h3>
+                <ol class="step-list">
+                    <li>Clone the repository:<br>
+                        <code>git clone https://github.com/subashkonar13/PDFTableReader.git</code></li>
+                    <li>Install dependencies:<br>
+                        <code>pip install -r requirements.txt</code></li>
+                    <li>Configure Azure credentials in environment variables</li>
+                </ol>
+
+                <h3>Docker Setup (Optional)</h3>
+                <div class="code-block">
+                    <pre><code>docker build -t pdf-extractor .
+docker run -p 8501:8501 pdf-extractor</code></pre>
+                </div>
+
                 <h3>Execution Flow</h3>
                 <div class="code-block">
                     <div class="mermaid">
@@ -244,25 +367,14 @@
                     </div>
                 </div>
 
-                <h3>Setup Process</h3>
-                <div class="code-block">
-                    <pre><code>pip install -r requirements.txt</code></pre>
-                </div>
-
-                <h3>Docker Deployment (Optional)</h3>
-                <div class="code-block">
-                    <pre><code>docker build -t pdf-extractor .
-docker run -p 8501:8501 pdf-extractor</code></pre>
-                </div>
-
-                <h3>Execution Steps</h3>
+                <h3>Running the Application</h3>
                 <ol class="step-list">
-                    <li>Start the application using:<br>
+                    <li>Start the application:<br>
                         <code>python -m streamlit run src/pdfreader.py</code></li>
-                    <li>Upload your PDF file through the Streamlit interface</li>
+                    <li>Upload your PDF file through the interface</li>
                     <li>Configure schema settings as needed</li>
-                    <li>Click "Process PDF" to initiate extraction</li>
-                    <li>Download the generated Excel file with extracted tables</li>
+                    <li>Click "Process PDF" to start extraction</li>
+                    <li>Download the generated Excel file</li>
                 </ol>
             </section>
 
@@ -276,6 +388,23 @@ docker run -p 8501:8501 pdf-extractor</code></pre>
                         <li>File handling problems</li>
                         <li>Azure API communication errors</li>
                     </ul>
+                </div>
+            </section>
+
+            <!-- For More Information Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>For More Information</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Project Repository</h5>
+                        <p class="card-text">For detailed documentation, source code, and implementation details, visit:</p>
+                        <a href="https://github.com/subashkonar13/PDFTableReader/blob/main/README.md" 
+                           class="btn read-more-btn" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
+                    </div>
                 </div>
             </section>
         </article>
