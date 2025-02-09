@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blog - Subash Konar</title>
+    <title>Building a PDF Table Extractor - Subash Konar</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -105,6 +105,65 @@
         .back-to-top:hover {
             background: #2a5298;
         }
+
+        /* Additional styles for article content */
+        .article-section {
+            margin-bottom: 4rem;
+        }
+
+        .article-section h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .architecture-diagram {
+            max-width: 100%;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .prerequisite-list {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            background: #1e3c72;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
     </style>
 </head>
 <body>
@@ -118,40 +177,76 @@
     <!-- Header -->
     <header class="blog-header text-center" data-aos="fade-down">
         <div class="container">
-            <h1 class="blog-title">Technical Blog</h1>
-            <p class="lead">Insights and experiences from my journey in tech</p>
+            <h1 class="blog-title">Building a PDF Table Extractor</h1>
+            <p class="lead">Using Azure Document Intelligence for Automated Table Extraction</p>
         </div>
     </header>
 
-    <!-- Blog Content -->
+    <!-- Article Content -->
     <main class="container">
-        <div class="row">
-            <!-- Blog Post 1 -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="blog-card card">
-                    <img src="images/pdf-extractor.jpg" class="blog-card-image card-img-top" alt="PDF Extractor">
-                    <div class="card-body">
-                        <h5 class="card-title">Building a PDF Table Extractor with Azure Form Recognizer</h5>
-                        <div class="blog-meta mb-3">
-                            <span class="me-3"><i class="fas fa-calendar"></i> March 15, 2024</span>
-                            <span><i class="fas fa-tags"></i> Python, Azure AI</span>
-                        </div>
-                        <p class="card-text">A deep dive into creating a Streamlit application that leverages Azure Form Recognizer to extract and process tabular data from PDFs.</p>
-                        <a href="blog/pdf-extractor.html" class="read-more-btn">Read More</a>
-                    </div>
+        <article>
+            <!-- Introduction Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Introduction</h2>
+                <p>The PDF Table Extractor is a sophisticated Python application that leverages Azure Document Intelligence (formerly Form Recognizer) to automatically extract and process tabular data from PDF files. This tool streamlines the often complex process of table extraction, making it accessible through a user-friendly Streamlit interface.</p>
+                
+                <div class="architecture-diagram" data-aos="fade-up">
+                    <h3>Architecture Overview</h3>
+                    <img src="images/pdf-architecture.png" alt="Architecture Diagram" class="img-fluid">
+                    <small class="text-muted">Flow: PDF Upload → Streamlit UI → Azure Document Intelligence → Table Extraction → Excel Generation</small>
                 </div>
-            </div>
+            </section>
 
-            <!-- Blog Post 2 (Coming Soon) -->
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="blog-card card">
-                    <div class="card-body">
-                        <h5 class="card-title">More Articles Coming Soon</h5>
-                        <p class="card-text">Stay tuned for more technical articles and insights.</p>
-                    </div>
+            <!-- Prerequisites Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Prerequisites</h2>
+                <div class="prerequisite-list">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Python >= 3.10</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Docker Desktop (optional)</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Azure Document Intelligence service</li>
+                    </ul>
                 </div>
-            </div>
-        </div>
+            </section>
+
+            <!-- Implementation Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Implementation</h2>
+                <h3>Setup Process</h3>
+                <div class="code-block">
+                    <pre><code>pip install -r requirements.txt</code></pre>
+                </div>
+
+                <h3>Docker Deployment (Optional)</h3>
+                <div class="code-block">
+                    <pre><code>docker build -t pdf-extractor .
+docker run -p 8501:8501 pdf-extractor</code></pre>
+                </div>
+
+                <h3>Execution Steps</h3>
+                <ol class="step-list">
+                    <li>Start the application using:<br>
+                        <code>python -m streamlit run src/pdfreader.py</code></li>
+                    <li>Upload your PDF file through the Streamlit interface</li>
+                    <li>Configure schema settings as needed</li>
+                    <li>Click "Process PDF" to initiate extraction</li>
+                    <li>Download the generated Excel file with extracted tables</li>
+                </ol>
+            </section>
+
+            <!-- Error Handling Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Error Handling</h2>
+                <div class="alert alert-info">
+                    <h4>The application includes comprehensive error handling for:</h4>
+                    <ul>
+                        <li>PDF processing errors</li>
+                        <li>File handling problems</li>
+                        <li>Azure API communication errors</li>
+                    </ul>
+                </div>
+            </section>
+        </article>
     </main>
 
     <!-- Back to Top Button -->
