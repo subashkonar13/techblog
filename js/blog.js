@@ -8,7 +8,7 @@
             'pdf-extractor': {
                 title: 'Building a PDF Table Extractor',
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
-                badges: ['Python', 'Azure']
+                badges: ['Python', 'Azure','Docker']
             },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
