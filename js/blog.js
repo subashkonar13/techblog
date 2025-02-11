@@ -10,6 +10,11 @@
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
                 badges: ['Python', 'Azure', 'Docker']
             },
+            'azure-orkes': {
+                title: 'Azure Function & Orkes Integration',
+                subtitle: 'Integrating Azure Functions with Orkes Conductor',
+                badges: ['Python', 'Azure', 'Orkes']
+            },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
                 subtitle: 'Building ML Pipelines with Azure ML',
