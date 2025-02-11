@@ -8,7 +8,7 @@
             'pdf-extractor': {
                 title: 'Building a PDF Table Extractor',
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
-                badges: ['Python', 'Azure']
+                badges: ['Python', 'Azure', 'Docker']
             },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
@@ -19,11 +19,6 @@
                 title: 'Cloud Architecture',
                 subtitle: 'Designing Scalable Cloud Solutions',
                 badges: ['Azure', 'Architecture']
-            },
-            'references': {
-                title: 'References',
-                subtitle: 'External Documentation and Resources',
-                badges: ['Docs']
             }
         };
 
@@ -126,6 +121,30 @@
             };
             return colors[badge] || 'secondary';
         }
+
+        // Add hover effects to topic cards
+        topicLinks.forEach(link => {
+            const card = link.querySelector('.topic-card');
+            if (card) {
+                // Add hover styles
+                card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+                
+                // Add hover event listeners
+                card.addEventListener('mouseenter', () => {
+                    if (!card.classList.contains('active')) {
+                        card.style.transform = 'scale(1.02)';
+                        card.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (!card.classList.contains('active')) {
+                        card.style.transform = 'scale(1)';
+                        card.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                    }
+                });
+            }
+        });
 
         // Initialize event listeners
         topicLinks.forEach(link => {
