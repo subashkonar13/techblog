@@ -8,7 +8,7 @@
             'pdf-extractor': {
                 title: 'Building a PDF Table Extractor',
                 subtitle: 'Using Azure Document Intelligence for Automated Table Extraction',
-                badges: ['Python', 'Azure','Docker']
+                badges: ['Python', 'Azure']
             },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
@@ -19,6 +19,11 @@
                 title: 'Cloud Architecture',
                 subtitle: 'Designing Scalable Cloud Solutions',
                 badges: ['Azure', 'Architecture']
+            },
+            'references': {
+                title: 'References',
+                subtitle: 'External Documentation and Resources',
+                badges: ['Docs']
             }
         };
 
@@ -159,7 +164,42 @@
         // Only initialize if we're on the blog page
         if (document.querySelector('.blog-header')) {
             ssBlogManager();
+            showReferences(); // Initialize the references button
         }
     })();
+
+    function showReferences() {
+        const referencesButton = document.createElement('button');
+        referencesButton.className = 'references-button btn btn-outline-secondary position-fixed';
+        referencesButton.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000;';
+        referencesButton.innerHTML = '<i class="fas fa-book me-2"></i>References';
+        
+        referencesButton.addEventListener('click', () => {
+            const referencesContent = document.getElementById('references-content');
+            const currentContent = document.querySelector('.blog-content[style*="display: block"]');
+            
+            if (referencesContent.style.display === 'none') {
+                // Store current content
+                if (currentContent) {
+                    currentContent.dataset.previousDisplay = currentContent.style.display;
+                    currentContent.style.display = 'none';
+                }
+                referencesContent.style.display = 'block';
+                referencesButton.innerHTML = '<i class="fas fa-times me-2"></i>Close References';
+            } else {
+                referencesContent.style.display = 'none';
+                // Restore previous content
+                if (currentContent && currentContent.dataset.previousDisplay) {
+                    currentContent.style.display = currentContent.dataset.previousDisplay;
+                }
+                referencesButton.innerHTML = '<i class="fas fa-book me-2"></i>References';
+            }
+            
+            // Refresh AOS animations
+            AOS.refresh();
+        });
+        
+        document.body.appendChild(referencesButton);
+    }
 
 })(document.documentElement);
