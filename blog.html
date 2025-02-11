@@ -297,7 +297,7 @@
             <h2 class="text-center mb-5">Technical Blog Topics</h2>
             <div class="row g-4">
                 <!-- Current Blog -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a href="#pdf-extractor" class="topic-link">
                         <div class="card topic-card active">
                             <div class="card-body">
@@ -309,8 +309,22 @@
                         </div>
                     </a>
                 </div>
+                <!-- Azure Function & Orkes -->
+                <div class="col-md-3">
+                    <a href="#azure-orkes" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Azure Function & Orkes</h5>
+                                <p class="card-text">Integrating Azure Functions with Orkes Conductor</p>
+                                <span class="badge bg-primary">Python</span>
+                                <span class="badge bg-secondary">Azure</span>
+                                <span class="badge bg-info">Orkes</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 <!-- ML Pipeline -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a href="#coming-soon-1" class="topic-link">
                         <div class="card topic-card">
                             <div class="card-body">
@@ -323,7 +337,7 @@
                     </a>
                 </div>
                 <!-- Cloud Architecture -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <a href="#coming-soon-2" class="topic-link">
                         <div class="card topic-card">
                             <div class="card-body">
@@ -460,6 +474,107 @@
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Azure Function & Orkes Article -->
+        <article id="azure-orkes-content" class="blog-content">
+            <section class="article-section" data-aos="fade-up">
+                <h2>Introduction</h2>
+                <p>This project demonstrates the integration between Azure Functions and Orkes Conductor (Netflix Conductor), creating an automated workflow that triggers when files are uploaded to Azure Blob Storage. The solution showcases how to build scalable, event-driven architectures using cloud services.</p>
+                
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">Architecture Overview</h3>
+                    <div class="mermaid">
+                        graph LR
+                            A[Azure Blob Storage] -->|Trigger| B[Azure Function]
+                            B -->|Start Workflow| C[Orkes Conductor]
+                    </div>
+                </div>
+            </section>
+
+            <!-- Prerequisites Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Prerequisites</h2>
+                <div class="prerequisite-list">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Azure Subscription</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Orkes Cloud Account</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>VSCode or similar editor</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Azure Functions Core Tools</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Components Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Key Components</h2>
+                <ol class="step-list">
+                    <li>
+                        Azure Function (function_app.py)
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#functionDetails" aria-expanded="false" aria-controls="functionDetails">
+                            Show Details
+                        </button>
+                        <div class="collapse mt-2" id="functionDetails">
+                            <div class="card card-body">
+                                <ul>
+                                    <li>Implements blob trigger for 'okesblob' container</li>
+                                    <li>Processes uploaded files</li>
+                                    <li>Extracts blob metadata</li>
+                                    <li>Initiates Orkes workflow</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        Orkes Integration (orkes_call.py)
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#orkesDetails" aria-expanded="false" aria-controls="orkesDetails">
+                            Show Details
+                        </button>
+                        <div class="collapse mt-2" id="orkesDetails">
+                            <div class="card card-body">
+                                <ul>
+                                    <li>Handles Orkes Conductor communication</li>
+                                    <li>Manages workflow execution</li>
+                                    <li>Handles authentication</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Configuration Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Configuration</h2>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="h5 mb-0">Environment Variables</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">ORKES_BASE_URL</li>
+                            <li class="list-group-item">ORKES_KEY_ID</li>
+                            <li class="list-group-item">ORKES_KEY_SECRET</li>
+                            <li class="list-group-item">WORKFLOW_NAME</li>
+                            <li class="list-group-item">WORKFLOW_VERSION</li>
+                            <li class="list-group-item">AZUREBLOB_STORAGE</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- For More Info Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>For More Information</h2>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>For detailed documentation, source code, and contribution guidelines, visit the project repository:</p>
+                        <a href="https://github.com/subashkonar13/Orkes-AzureConnector" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
                     </div>
                 </div>
             </section>
