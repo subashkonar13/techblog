@@ -45,15 +45,15 @@
             const codeBlocks = document.querySelectorAll('.card-body code');
             codeBlocks.forEach(codeBlock => {
                 const copyButton = document.createElement('button');
-                copyButton.className = 'copy-btn btn btn-sm btn-outline-secondary position-absolute';
-                copyButton.style.cssText = 'top: 5px; right: 5px;';
-                copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                copyButton.className = 'copy-btn btn btn-sm btn-outline-secondary position-absolute d-flex align-items-center';
+                copyButton.style.cssText = 'top: 5px; right: 5px; gap: 4px;';
+                copyButton.innerHTML = '<i class="fas fa-copy"></i><span>Copy</span>';
                 copyButton.addEventListener('click', async () => {
                     try {
                         await navigator.clipboard.writeText(codeBlock.textContent);
-                        copyButton.innerHTML = 'Copied!';
+                        copyButton.innerHTML = '<i class="fas fa-check"></i><span>Copied!</span>';
                         setTimeout(() => {
-                            copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                            copyButton.innerHTML = '<i class="fas fa-copy"></i><span>Copy</span>';
                         }, 2000);
                     } catch (err) {
                         console.error('Failed to copy text: ', err);
