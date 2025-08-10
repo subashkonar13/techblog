@@ -371,6 +371,21 @@
                         </div>
                     </a>
                 </div>
+                <!-- Git Branch Management -->
+                <div class="col-md-3">
+                    <a href="#jupyter-git-branch" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Git Branch Management</h5>
+                                <p class="card-text">Running Specific Git Branches in Jupyter & Databricks</p>
+                                <span class="badge bg-primary">Python</span>
+                                <span class="badge bg-dark">Git</span>
+                                <span class="badge bg-warning">Jupyter</span>
+                                <span class="badge bg-danger">Databricks</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -688,6 +703,186 @@
                 <h2>Coming Soon!</h2>
                 <div class="alert alert-info">
                     <p>This comprehensive guide to cloud architecture patterns is currently being prepared. Stay tuned!</p>
+                </div>
+            </section>
+        </article>
+
+        <!-- Git Branch Management Article -->
+        <article id="jupyter-git-branch-content" class="blog-content" style="display: none;">
+            <section class="article-section" data-aos="fade-up">
+                <h2>Introduction</h2>
+                <p>Managing different Git branches within Jupyter notebooks and Databricks environments is crucial for collaborative development and testing. This guide demonstrates how to dynamically switch between branches and execute code from specific branches within notebook environments.</p>
+                
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">Workflow Overview</h3>
+                    <div class="architecture-step text-center">Git Repository</div>
+                    <div class="architecture-step text-center">Branch Selection</div>
+                    <div class="architecture-step text-center">Notebook Environment</div>
+                    <div class="architecture-step text-center">Code Execution</div>
+                    <div class="architecture-step text-center">Results & Testing</div>
+                </div>
+            </section>
+
+            <!-- Prerequisites Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Prerequisites</h2>
+                <div class="prerequisite-list">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Git repository access</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Jupyter or Databricks environment</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Python >= 3.8</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>Git CLI or GitPython library</li>
+                        <li><i class="fas fa-check-circle text-success me-2"></i>GitHub Personal Access Token</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Setup Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Setup: Creating GitHub Personal Access Token</h2>
+                <p>Before working with private repositories or organization repos, you'll need to create a Personal Access Token for authentication.</p>
+                
+                <h3>Navigation Steps</h3>
+                <ol class="step-list">
+                    <li>
+                        Navigate to GitHub Settings
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigationSteps" aria-expanded="false" aria-controls="navigationSteps">
+                            Show Navigation Path
+                        </button>
+                        <div class="collapse mt-2" id="navigationSteps">
+                            <div class="card card-body">
+                                <p><strong>User Profile (Right Hand Side Top Corner)</strong> → <strong>Settings</strong> → <strong>Developer Settings</strong> → <strong>Personal Access Tokens</strong> → <strong>Tokens (Classic)</strong></p>
+                                <div class="text-center mt-3">
+                                    <img src="image (6).png" alt="GitHub Navigation to Personal Access Tokens" class="img-fluid border rounded" style="max-width: 100%; height: auto;">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        Select appropriate permissions
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#permissions" aria-expanded="false" aria-controls="permissions">
+                            Show Required Permissions
+                        </button>
+                        <div class="collapse mt-2" id="permissions">
+                            <div class="card card-body">
+                                <ul>
+                                    <li><strong>repo</strong> - Full control of private repositories</li>
+                                    <li><strong>workflow</strong> - Update GitHub Action workflows</li>
+                                    <li><strong>read:org</strong> - Read org and team membership</li>
+                                    <li><strong>user:email</strong> - Access user email addresses</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        Configure SSO for Organization Repositories
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#ssoConfig" aria-expanded="false" aria-controls="ssoConfig">
+                            Show SSO Configuration
+                        </button>
+                        <div class="collapse mt-2" id="ssoConfig">
+                            <div class="card card-body">
+                                <p>If working with organization repositories, you'll need to authorize SSO after creating the token.</p>
+                                <div class="text-center mt-3">
+                                    <img src="Screenshot 2025-08-09 at 12.53.42.png" alt="GitHub SSO Authorization" class="img-fluid border rounded" style="max-width: 100%; height: auto;">
+                                </div>
+                                <p class="mt-3"><em>Click "Configure SSO" next to your organization and authorize access.</em></p>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Implementation Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Implementation Methods</h2>
+                <h3>Method 1: Direct Package Installation from Branch</h3>
+                <ol class="step-list">
+                    <li>
+                        Install package directly from specific branch
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#pipInstall" aria-expanded="false" aria-controls="pipInstall">
+                            Show Pip Install Command
+                        </button>
+                        <div class="collapse mt-2" id="pipInstall">
+                            <div class="card card-body">
+                                <code>%pip install --force-reinstall --no-deps git+https://&lt;token&gt;@github.com/&lt;organisation&gt;/&lt;repo name&gt;.git@&lt;branch-name&gt;</code>
+                                <hr>
+                                <p><strong>Example:</strong></p>
+                                <code>%pip install --force-reinstall --no-deps git+https://ghp_xxxxxxxxxxxx@github.com/myorg/mypackage.git@feature-branch</code>
+                                <hr>
+                                <p><strong>Parameters:</strong></p>
+                                <ul class="small">
+                                    <li><code>--force-reinstall</code>: Reinstall packages even if up-to-date</li>
+                                    <li><code>--no-deps</code>: Don't install package dependencies</li>
+                                    <li><code>@branch-name</code>: Specify the branch to install from</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        Execute branch-specific code
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#executeCode" aria-expanded="false" aria-controls="executeCode">
+                            Show Example
+                        </button>
+                        <div class="collapse mt-2" id="executeCode">
+                            <div class="card card-body">
+                                <code>import sys<br>
+                                # Import and use the installed package<br>
+                                from mypackage import function<br>
+                                # Execute branch-specific functionality<br>
+                                result = function()</code>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Method 2: Dynamic Installation with Environment Variables</h3>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>Install Python packages using environment variables for better security and flexibility.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#directInstall" aria-expanded="false" aria-controls="directInstall">
+                            Show Dynamic Installation
+                        </button>
+                        <div class="collapse mt-2" id="directInstall">
+                            <div class="card card-body">
+                                <code># For Jupyter/Databricks notebooks<br>
+                                import os<br>
+                                token = os.getenv('GITHUB_TOKEN')<br>
+                                org = "myorganisation"<br>
+                                repo = "mypackage"<br>
+                                branch = "feature-branch"<br>
+                                %pip install --force-reinstall --no-deps git+https://{token}@github.com/{org}/{repo}.git@{branch}</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Best Practices</h2>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Store tokens as environment variables, never hardcode them</li>
+                            <li class="list-group-item">Use minimal required permissions for tokens</li>
+                            <li class="list-group-item">Regularly rotate access tokens</li>
+                            <li class="list-group-item">Clean up cloned repositories after use</li>
+                            <li class="list-group-item">Use virtual environments for dependency isolation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- For More Info Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>For More Information</h2>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p>For detailed documentation and examples, visit the project repository:</p>
+                        <a href="https://github.com/subashkonar13/jupyter-git-branch-demo" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github me-2"></i>View on GitHub
+                        </a>
+                    </div>
                 </div>
             </section>
         </article>
