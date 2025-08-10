@@ -15,6 +15,11 @@
                 subtitle: 'Integrating Azure Functions with Orkes Conductor',
                 badges: ['Python', 'Azure', 'Orkes']
             },
+            'jupyter-git-branch': {
+                title: 'Git Branch Management in Notebooks',
+                subtitle: 'Running Specific Git Branches in Jupyter & Databricks',
+                badges: ['Python', 'Git', 'Jupyter', 'Databricks']
+            },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
                 subtitle: 'Building ML Pipelines with Azure ML',
@@ -122,7 +127,10 @@
                 'Python': 'primary',
                 'Azure': 'info',
                 'ML': 'success',
-                'Architecture': 'warning'
+                'Architecture': 'warning',
+                'Git': 'dark',
+                'Jupyter': 'warning',
+                'Databricks': 'danger'
             };
             return colors[badge] || 'secondary';
         }
