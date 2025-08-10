@@ -1,0 +1,39 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Portfolio Site",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/live-server",
+            "args": [
+                "--port=8080",
+                "--open=/index.html",
+                "--no-css-inject"
+            ],
+            "console": "integratedTerminal",
+            "preLaunchTask": "install-live-server"
+        },
+        {
+            "name": "Launch Blog Page",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/.bin/live-server",
+            "args": [
+                "--port=8080",
+                "--open=/blog.html",
+                "--no-css-inject"
+            ],
+            "console": "integratedTerminal",
+            "preLaunchTask": "install-live-server"
+        },
+        {
+            "name": "Python HTTP Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/serve.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
