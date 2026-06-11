@@ -1054,15 +1054,16 @@ storeId + query ──▶ [catalog/search API] ──▶ [ { name, price, mrp,
 
             <!-- Build a tool Section -->
             <section class="article-section" data-aos="fade-up">
-                <h2>Can You Build a Similar Tool?</h2>
-                <p>Technically yes — it's exactly what these aggregators did — but go in clear-eyed about the cost and risk. What it actually takes:</p>
+                <h2>How to Build a Tool Similar to This</h2>
+                <p>If you want to build your own price-comparison aggregator, the architecture breaks down into five building blocks. Here's how each one works and what to keep in mind:</p>
                 <ol class="step-list">
-                    <li><strong>Geocoding</strong> — address &rarr; lat/lon (Google / Mapbox / OSM).</li>
-                    <li><strong>Store resolution</strong> per platform — call each location endpoint with lat/lon, cache the store IDs.</li>
-                    <li><strong>Catalog fetch</strong> per store — call each search/listing endpoint, parse price + availability.</li>
-                    <li><strong>SKU matching</strong> — <em>the hard part.</em> Aligning "Amul Toned Milk 500ml" across platforms with different IDs, names, and pack sizes. This is where most of the real engineering (and increasingly ML / fuzzy matching) goes.</li>
-                    <li><strong>Infrastructure</strong> — request signing/headers per platform, proxies/IP rotation, rate limiting, retries, and a maintenance process for when endpoints break.</li>
+                    <li><strong>Geocoding</strong> — Start by turning a user's address into coordinates. Use a geocoding service such as Google Maps, Mapbox, or OpenStreetMap to convert an address into a latitude/longitude pair.</li>
+                    <li><strong>Store resolution per platform</strong> — Feed those coordinates to each platform's location endpoint to find which dark store serves that point, then cache the returned store IDs to avoid re-resolving on every request.</li>
+                    <li><strong>Catalog fetch per store</strong> — With a store ID in hand, query that platform's search or listing endpoint to pull the product data, then parse out price and availability for each item.</li>
+                    <li><strong>SKU matching</strong> — Plan to spend most of your effort here, since this is the core challenge. You'll need to align the same product (e.g. "Amul Toned Milk 500ml") across platforms that use different IDs, names, and pack sizes. Teams increasingly lean on ML and fuzzy-matching techniques to do this reliably.</li>
+                    <li><strong>Infrastructure</strong> — Wrap it all in a resilient backend: handle per-platform request signing and headers, rotate proxies/IPs, apply rate limiting and retries, and build a monitoring process so you can react quickly when an endpoint changes or breaks.</li>
                 </ol>
+                <p class="mb-0">Start small — get a single platform working end to end (location &rarr; store ID &rarr; search &rarr; price) before adding more. That keeps the moving parts manageable while you learn each platform's quirks.</p>
             </section>
 
             <!-- Ethics Section -->
