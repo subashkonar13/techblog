@@ -97,3 +97,33 @@ branch = "feature-branch"
 
 ### For More Information
 [View on GitHub](https://github.com/subashkonar13/jupyter-git-branch-demo)
+
+---
+
+## instant-delivery
+**title:** How Instant Delivery Aggregators Work
+**subtitle:** Reverse-Engineering Quick-Commerce Price Comparison Apps
+**badges:** Quick Commerce,APIs,Architecture
+
+### Introduction
+Instant-delivery price-comparison apps like QuickCompare show the price of the same product across Blinkit, Zepto, Swiggy Instamart, BigBasket, JioMart and DMart — plus each platform's delivery ETA and serviceability — on a single screen. None of these quick-commerce platforms publish a public API, so how do aggregators get that data? Based on a hands-on inspection of QuickCompare's live network traffic: they don't scrape HTML pages. The website is a thin client over their own backend aggregator, which calls each platform's private store-locator and catalog APIs, keyed by a per-location store ID.
+
+### Architecture Overview
+```architecture
+User Location (lat/lon) → Aggregator Backend (api.quickcompare.in/qc) → Per-Platform Store Resolution → Store IDs → Per-Store Catalog & Price APIs → SKU Matching → Merged Price-Comparison Grid
+```
+
+### Key Findings
+1. **The frontend is just a shell** — all product/price data comes from one backend endpoint switched by a `type` parameter (`geocode`, `home`, `autocomplete`, `search`).
+2. **Location → store resolution** — lat/lon is mapped to each platform's internal dark-store ID (Blinkit numeric, Zepto UUID, Swiggy numeric).
+3. **Store ID → stock & price** — the catalog API scoped to a store returns `available`/`price` as fields on each product object; there is no separate stock call.
+4. **Request signing** — the backend is gated by an encrypted `x-request-id` header (auth/anti-scraping only); it does not decide which items you see — your geolocation does.
+
+### Ethics & Legality
+Inspecting network traffic in your own browser is benign. Replicating these internal APIs violates the platforms' Terms of Service, faces active bot defenses, and at scale is parasitic. Fine for personal/educational use at tiny volume; risky as a public commercial product.
+
+### For More Information
+General background (unaffiliated scraping vendors):
+- [Web Scraping Blinkit, Zepto, Instamart, BigBasket](https://www.fooddatascrape.com/web-scraping-blinkit-zepto-instamart-and-big-basket-grocery-prices.php)
+- [Understanding Quick Commerce Data APIs](https://www.foodspark.io/understanding-quick-commerce-data-apis/)
+- [Price Comparison for Same SKUs](https://www.actowizsolutions.com/price-comparison-same-skus-blinkit-zepto-instamart.php)
