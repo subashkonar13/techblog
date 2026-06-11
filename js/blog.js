@@ -20,6 +20,11 @@
                 subtitle: 'Running Specific Git Branches in Jupyter & Databricks',
                 badges: ['Python', 'Git', 'Jupyter', 'Databricks']
             },
+            'instant-delivery': {
+                title: 'How Instant Delivery Aggregators Work',
+                subtitle: 'Reverse-Engineering Quick-Commerce Price Comparison Apps',
+                badges: ['Quick Commerce', 'APIs', 'Architecture']
+            },
             'coming-soon-1': {
                 title: 'Machine Learning Pipeline',
                 subtitle: 'Building ML Pipelines with Azure ML',
@@ -130,7 +135,9 @@
                 'Architecture': 'warning',
                 'Git': 'dark',
                 'Jupyter': 'warning',
-                'Databricks': 'danger'
+                'Databricks': 'danger',
+                'Quick Commerce': 'success',
+                'APIs': 'info'
             };
             return colors[badge] || 'secondary';
         }
