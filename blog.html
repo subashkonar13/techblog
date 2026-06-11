@@ -386,6 +386,20 @@
                         </div>
                     </a>
                 </div>
+                <!-- Instant Delivery Aggregators -->
+                <div class="col-md-3">
+                    <a href="#instant-delivery" class="topic-link">
+                        <div class="card topic-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Instant Delivery Aggregators</h5>
+                                <p class="card-text">How Quick-Commerce Price Comparison Apps Really Work</p>
+                                <span class="badge bg-success">Quick Commerce</span>
+                                <span class="badge bg-info">APIs</span>
+                                <span class="badge bg-dark">Architecture</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -882,6 +896,244 @@
                         <a href="https://github.com/subashkonar13/jupyter-git-branch-demo" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github me-2"></i>View on GitHub
                         </a>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Instant Delivery Aggregators Article -->
+        <article id="instant-delivery-content" class="blog-content" style="display: none;">
+            <section class="article-section" data-aos="fade-up">
+                <h2>Introduction</h2>
+                <p>Instant-delivery price-comparison apps like <strong>QuickCompare</strong> promise a single screen that shows you the price of the same product across Blinkit, Zepto, Swiggy Instamart, BigBasket, JioMart and DMart — along with each platform's delivery ETA and whether they currently serve your address. But how do they actually get that data when none of these quick-commerce platforms publish a public API?</p>
+                <p>This article walks through what these aggregators really do under the hood, based on a hands-on inspection of QuickCompare's live network traffic. The short version: they don't scrape HTML pages — they act as a thin client over their own backend aggregator, which calls each platform's <strong>private store-locator and catalog APIs</strong>, keyed by a per-location store ID.</p>
+
+                <div class="architecture-container">
+                    <h3 class="text-center mb-4">Aggregator Data Flow</h3>
+                    <div class="architecture-step text-center">User Location (lat / lon)</div>
+                    <div class="architecture-step text-center">Aggregator Backend (api.quickcompare.in/qc)</div>
+                    <div class="architecture-step text-center">Per-Platform Store Resolution → Store IDs</div>
+                    <div class="architecture-step text-center">Per-Store Catalog & Price APIs</div>
+                    <div class="architecture-step text-center">SKU Matching & Normalization</div>
+                    <div class="architecture-step text-center">Merged Price-Comparison Grid</div>
+                </div>
+            </section>
+
+            <!-- The Short Answer Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>The Short Answer</h2>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <p class="mb-0">The website is just a thin client. All the work happens on the aggregator's own backend, which behaves as a fan-out proxy: it resolves your location into each platform's internal store ID, then calls that platform's private JSON API — the same endpoints the official Blinkit / Zepto / Swiggy apps use internally — to fetch live prices and stock for that store.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What Was Observed Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>What Was Actually Observed</h2>
+                <ol class="step-list">
+                    <li>
+                        <strong>The frontend is just a shell.</strong> Loading the page fires ~100 requests, but the only ones carrying product/price data hit a single endpoint, switched by a <code>type</code> parameter.
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#endpointDetails" aria-expanded="false" aria-controls="endpointDetails">
+                            Show Endpoint
+                        </button>
+                        <div class="collapse mt-2" id="endpointDetails">
+                            <div class="card card-body">
+                                <code>GET https://api.quickcompare.in/qc?lat=13.08784&lon=80.27847&type=home
+GET https://api.quickcompare.in/qc?lat=...&lon=...&type=geocode
+GET https://api.quickcompare.in/qc?lat=...&lon=...&type=search&q=milk</code>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <strong>Location &rarr; per-platform store resolution.</strong> The browser geolocates the user, sends lat/lon to the backend, and the <code>type=home</code> response maps that location to each platform's internal store identifier.
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#etaDetails" aria-expanded="false" aria-controls="etaDetails">
+                            Show Response
+                        </button>
+                        <div class="collapse mt-2" id="etaDetails">
+                            <div class="card card-body">
+                                <code>"eta": [
+  {"platform":"BlinkIt","storeId":"41971","eta":"9 mins","open":true},
+  {"platform":"Zepto","storeId":"5d83d37a-c7fa-4891-b9dd-72c9d308f862","eta":"13 mins"},
+  {"platform":"Swiggy","storeId":"1402050","storeIds":["1402050","1400603"],
+     "serviceabilityStatus":"SERVICEABLE"},
+  {"platform":"BigBasket"}, {"platform":"JioMart"}, {"platform":"DMart","open":false}
+]</code>
+                            </div>
+                        </div>
+                    </li>
+                    <li><strong>Images are hot-linked from the source platforms' CDNs</strong> (e.g. <code>cdn.zeptonow.com</code>), another sign the data comes from structured APIs rather than scraped pages.</li>
+                    <li>
+                        <strong>The backend is protected by request signing.</strong> A direct call with the right params is rejected — real requests carry obfuscated, server-validated headers.
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#authDetails" aria-expanded="false" aria-controls="authDetails">
+                            Show Details
+                        </button>
+                        <div class="collapse mt-2" id="authDetails">
+                            <div class="card card-body">
+                                <code>HTTP 401 {"error":"Security validation failed",
+          "message":"Missing encrypted request ID in headers or body"}
+
+x-request-id: BAcIUARZAFdLVw4LVUxVBQ9VT1pWCQ0UWwYJAgkN...   (encrypted)
+x-clean-user-id: qc_mq8w5wf8_nroh7yufl87
+x-geolocation-latitude / -longitude / -pincode / -city / -formattedaddress</code>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- Two Roles Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Two Different Jobs: Location vs. Signed Request ID</h2>
+                <p>A common misconception is that the signed client ID lists the items. It doesn't — it is purely a security gate. What determines <em>which</em> items you see is your location.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>x-geolocation-latitude / longitude</strong> &mdash; Picks the store per platform. <span class="text-success">This drives the listing.</span></li>
+                            <li class="list-group-item"><strong>x-request-id (encrypted)</strong> &mdash; Proves the caller is the real client. <span class="text-muted">Pure auth / anti-scraping — does not affect what items you see.</span></li>
+                        </ul>
+                        <p class="mt-3 mb-0"><em>Analogy:</em> geolocation is the search query ("what's available near me right now"); the signed request ID is the membership card you flash at the door. The card doesn't choose your groceries — it just gets you in.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Store ID Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>How the Store ID Is Resolved</h2>
+                <p>A "store ID" is a platform's internal identifier for the specific <strong>dark store</strong> (mini-warehouse) that serves your area. Aggregators don't maintain a hand-built list — they resolve it dynamically per request from your coordinates, the same way the official apps do, by calling each platform's serviceability / store-locator endpoint. This was confirmed firsthand on Zepto:</p>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <code>GET https://bff-gateway.zepto.com/lms/api/v2/get_page?latitude=12.96902&longitude=77.75395&page_type=HOME&version=v2
+
+Response:
+"storeId":"b4dc8d65-ed2e-4142-81b6-373982b13500", "etaInMinutes":4
+"storeId":"0059ff6a-7eb0-477a-a7f5-69256f2c444b", "etaInMinutes":16</code>
+                    </div>
+                </div>
+                <p>Each platform has its own equivalent (paths drift over time, so always confirm via DevTools — never hardcode from a blog):</p>
+                <div class="prerequisite-list">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-store text-info me-2"></i><strong>Zepto</strong> &rarr; <code>bff-gateway.zepto.com/.../get_page?latitude=&longitude=</code> (store UUID)</li>
+                        <li><i class="fas fa-store text-info me-2"></i><strong>Blinkit</strong> &rarr; location set via <code>lat</code>/<code>lon</code> request headers; store id returned in layout responses</li>
+                        <li><i class="fas fa-store text-info me-2"></i><strong>Swiggy Instamart</strong> &rarr; <code>swiggy.com/api/instamart/...</code> with lat/lng; returns <code>storeId</code> + <code>serviceabilityStatus</code></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Inventory Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>From Store ID to In-Stock &amp; Price</h2>
+                <p>Once you have the store ID, you call that platform's catalog / search / product API <strong>scoped to that store</strong> (passed as a header, cookie, or query/body param). There is no separate "is it in stock" call — <strong>stock and price are fields on the product object</strong> for that store.</p>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <code>lat/lon ──▶ [store-resolve API] ──▶ storeId
+storeId + query ──▶ [catalog/search API] ──▶ [ { name, price, mrp,
+                                               available:true/false,
+                                               inventory/quantity, ... } ]</code>
+                    </div>
+                </div>
+                <p class="mb-0">"Out of stock" simply means the product is absent from that store's catalog response, or present with an <code>available:false</code> / <code>outOfStock:true</code> / zero-inventory flag. That's how the aggregator knows to grey out a platform for a given item.</p>
+            </section>
+
+            <!-- Is it public Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Is the API Publicly Available?</h2>
+                <p>Reachable, but not "public" in any official sense. Be precise about the distinction:</p>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger me-2"></i><strong>Not documented or sanctioned.</strong> These are internal APIs powering the platforms' own apps.</li>
+                            <li class="list-group-item"><i class="fas fa-exclamation-triangle text-warning me-2"></i><strong>Using them violates Terms of Service</strong>, which prohibit automated access / scraping.</li>
+                            <li class="list-group-item"><i class="fas fa-shield-alt text-primary me-2"></i><strong>They're actively defended</strong> — signed headers, rotating auth, Cloudflare/Akamai bot protection, TLS fingerprinting, rate limits, IP bans.</li>
+                            <li class="list-group-item"><i class="fas fa-sync text-secondary me-2"></i><strong>They change without notice</strong> — endpoint paths and payload shapes shift, so anything built on them needs constant maintenance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Build a tool Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>Can You Build a Similar Tool?</h2>
+                <p>Technically yes — it's exactly what these aggregators did — but go in clear-eyed about the cost and risk. What it actually takes:</p>
+                <ol class="step-list">
+                    <li><strong>Geocoding</strong> — address &rarr; lat/lon (Google / Mapbox / OSM).</li>
+                    <li><strong>Store resolution</strong> per platform — call each location endpoint with lat/lon, cache the store IDs.</li>
+                    <li><strong>Catalog fetch</strong> per store — call each search/listing endpoint, parse price + availability.</li>
+                    <li><strong>SKU matching</strong> — <em>the hard part.</em> Aligning "Amul Toned Milk 500ml" across platforms with different IDs, names, and pack sizes. This is where most of the real engineering (and increasingly ML / fuzzy matching) goes.</li>
+                    <li><strong>Infrastructure</strong> — request signing/headers per platform, proxies/IP rotation, rate limiting, retries, and a maintenance process for when endpoints break.</li>
+                </ol>
+            </section>
+
+            <!-- Ethics Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>A Note on Ethics &amp; Legality</h2>
+                <div class="alert alert-info">
+                    <p class="mb-2"><strong>Inspecting</strong> a site's network traffic in your own browser is benign — it's reading data sent to you, the same thing "view source" does. <strong>Replicating</strong> those internal APIs at scale is where the weight sits.</p>
+                    <ul class="mb-0">
+                        <li><strong>Fine:</strong> understanding how the category works; a personal/educational experiment at tiny volume that respects rate limits.</li>
+                        <li><strong>Not fine:</strong> defeating signing / bot-protection, scraping at volumes that burden their infrastructure, evading IP bans, or hiding that you're scraping. Free-riding on another company's infra and hot-linking their data is, at scale, parasitic and contested even where not clearly illegal.</li>
+                    </ul>
+                </div>
+                <p class="mb-0">The engineering is the easy 30%; the legal exposure, anti-bot arms race, and SKU-matching are the 70% that decide whether a public commercial product survives. If this becomes a real product, talk to a lawyer.</p>
+            </section>
+
+            <!-- External References Section -->
+            <section class="article-section" data-aos="fade-up">
+                <h2>External References</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="reference-item mb-4">
+                                    <h5>Web Scraping Blinkit, Zepto, Instamart, BigBasket</h5>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">General industry background on quick-commerce data extraction</p>
+                                        </div>
+                                        <a href="https://www.fooddatascrape.com/web-scraping-blinkit-zepto-instamart-and-big-basket-grocery-prices.php"
+                                           class="btn btn-sm btn-outline-primary"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reference-item mb-4">
+                                    <h5>Understanding Quick Commerce Data APIs</h5>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">How Instamart / Zepto / Blinkit data APIs are structured</p>
+                                        </div>
+                                        <a href="https://www.foodspark.io/understanding-quick-commerce-data-apis/"
+                                           class="btn btn-sm btn-outline-primary"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="reference-item mb-4">
+                                    <h5>Price Comparison for Same SKUs</h5>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-grow-1">
+                                            <p class="mb-0">The SKU-matching problem across platforms</p>
+                                        </div>
+                                        <a href="https://www.actowizsolutions.com/price-comparison-same-skus-blinkit-zepto-instamart.php"
+                                           class="btn btn-sm btn-outline-primary"
+                                           target="_blank"
+                                           rel="noopener noreferrer">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mb-0"><em>Note: these are unrelated commercial scraping vendors cited only for general background — they are not affiliated with QuickCompare or any platform discussed here.</em></p>
                     </div>
                 </div>
             </section>
